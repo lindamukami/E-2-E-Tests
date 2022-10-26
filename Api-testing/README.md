@@ -2,7 +2,7 @@
 ------------------------
 ## About
 - API Automation with postman.
-
+- The collection consists of the various apis +  automation api script for the products api.
 - The api's used in this test can be found [here](https://fakestoreapi.com/docs)
 
 
