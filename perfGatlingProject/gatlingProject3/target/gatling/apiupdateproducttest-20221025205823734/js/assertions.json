@@ -1,0 +1,10 @@
+{
+  "simulation": "com.gatling.tests.api.apiUpdateProductTest",
+  "simulationId": "apiupdateproducttest",
+  "start": 1666731503734,
+  "description": "update product",
+  "scenarios": ["UpdateProduct"],
+  "assertions": [
+
+  ]
+}

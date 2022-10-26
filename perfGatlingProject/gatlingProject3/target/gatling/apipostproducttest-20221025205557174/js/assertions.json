@@ -1,0 +1,10 @@
+{
+  "simulation": "com.gatling.tests.api.apiPostProductTest",
+  "simulationId": "apipostproducttest",
+  "start": 1666731357174,
+  "description": "post product",
+  "scenarios": ["CreateProduct"],
+  "assertions": [
+
+  ]
+}

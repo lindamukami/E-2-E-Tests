@@ -1,0 +1,10 @@
+{
+  "simulation": "com.gatling.tests.api.apiGetProductTest",
+  "simulationId": "apigetproducttest",
+  "start": 1666731270088,
+  "description": "Get single product",
+  "scenarios": ["GetSingleProduct"],
+  "assertions": [
+
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "simulation": "com.gatling.tests.api.apiDeleteProductTest",
+  "simulationId": "apideleteproducttest",
+  "start": 1666731764683,
+  "description": "delete",
+  "scenarios": ["DeleteProduct"],
+  "assertions": [
+
+  ]
+}

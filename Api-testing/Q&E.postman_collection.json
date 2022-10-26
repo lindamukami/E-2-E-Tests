@@ -1,0 +1,855 @@
+{
+	"info": {
+		"_postman_id": "e5eda5cf-8ca4-4c4d-9a9b-5f41e2fdc571",
+		"name": "Q&E",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21817526"
+	},
+	"item": [
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "All products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const res = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200 OK\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test('Products have correct properties and value types', () => {\r",
+									"    res.forEach(product => {\r",
+									"        pm.expect(product.id).to.be.a('Number');\r",
+									"        pm.expect(product.title).to.be.a('String');\r",
+									"        pm.expect(product.price).to.be.a('Number');\r",
+									"        pm.expect(product.description).to.be.a('String');\r",
+									"        pm.expect(product.category).to.be.a('String');\r",
+									"        pm.expect(product.image).to.be.a('String');\r",
+									"        pm.expect(product.rating.rate).to.be.a('Number');\r",
+									"        pm.expect(product.rating.count).to.be.a('Number');\r",
+									"    })\r",
+									"});\r",
+									"\r",
+									"pm.test('The length of the list is exactly 20', () => {\r",
+									"    pm.expect(res.length).eql(20);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{productUrl}}",
+							"host": [
+								"{{productUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "new product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const res = pm.response.json();\r",
+									"\r",
+									"pm.collectionVariables.set(res.id, \"{{product_id}}\"); \r",
+									"\r",
+									"pm.collectionVariables.set(\"variable_key\", \"variable_value\");\r",
+									"pm.test(\"Status code is 201 Created\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"test product1\",\r\n    \"price\": 13.5,\r\n    \"description\": \"lorem ipsum set\",\r\n    \"image\": \"https://i.pravatar.cc\",\r\n    \"category\": \"electronic\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{productUrl}}",
+							"host": [
+								"{{productUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Single product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const res = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200 OK\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test('Products have correct properties and value types', () => {\r",
+									"    res.forEach(product => {\r",
+									"        pm.expect(product.id).to.be.a('Number');\r",
+									"        pm.expect(product.title).to.be.a('String');\r",
+									"        pm.expect(product.price).to.be.a('Number');\r",
+									"        pm.expect(product.description).to.be.a('String');\r",
+									"        pm.expect(product.category).to.be.a('String');\r",
+									"        pm.expect(product.image).to.be.a('String');\r",
+									"        pm.expect(product.rating.rate).to.be.a('Number');\r",
+									"        pm.expect(product.rating.count).to.be.a('Number');\r",
+									"    })\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{productUrl}}/",
+							"host": [
+								"{{productUrl}}"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Limit result",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const res = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200 OK\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test('Product to have 5 items', () => {\r",
+									"    pm.expect(res).to.have.length(5);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{productUrl}}?limit=5",
+							"host": [
+								"{{productUrl}}"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sort results",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const res = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200 OK\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{productUrl}}?sort=desc",
+							"host": [
+								"{{productUrl}}"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "desc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All categories",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const res = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200 Unauthorized\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test('The length of the list is exactly 4', () => {\r",
+									"    pm.expect(res.length).eql(4);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{productUrl}}/categories",
+							"host": [
+								"{{productUrl}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "products in a specific category",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const res = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200 Unauthorized\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response must have a body and be valid\", () =>{\r",
+									"    pm.response.to.be.withBody;\r",
+									"    pm.response.to.be.ok;\r",
+									"    pm.response.to.be.json;\r",
+									"    \r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{productUrl}}/category/jewelery",
+							"host": [
+								"{{productUrl}}"
+							],
+							"path": [
+								"category",
+								"jewelery"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "A product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const res = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200 Created\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"test product\",\r\n    \"price\": 13.5,\r\n    \"description\": \"lorem ipsum set\",\r\n    \"image\": \"https://i.pravatar.cc\",\r\n    \"category\": \"electronic\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{productUrl}}/7",
+							"host": [
+								"{{productUrl}}"
+							],
+							"path": [
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "A product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const res = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200 Unauthorized\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"test product\",\r\n    \"price\": 13.5,\r\n    \"description\": \"lorem ipsum set\",\r\n    \"image\": \"https://i.pravatar.cc\",\r\n    \"category\": \"electronic\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{productUrl}}/7",
+							"host": [
+								"{{productUrl}}"
+							],
+							"path": [
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "A product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const res = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200 Unauthorized\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{productUrl}}/6",
+							"host": [
+								"{{productUrl}}"
+							],
+							"path": [
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cart",
+			"item": [
+				{
+					"name": "all carts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{cartUrl}}",
+							"host": [
+								"{{cartUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "single cart",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{cartUrl}}/5",
+							"host": [
+								"{{cartUrl}}"
+							],
+							"path": [
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "limit results",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{cartUrl}}?limit=5",
+							"host": [
+								"{{cartUrl}}"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "sort results",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{cartUrl}}?sort=desc",
+							"host": [
+								"{{cartUrl}}"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "desc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "date range",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{cartUrl}}/startdate=2019-12-10&enddate=2020-10-10",
+							"host": [
+								"{{cartUrl}}"
+							],
+							"path": [
+								"startdate=2019-12-10&enddate=2020-10-10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user carts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{cartUrl}}/user/2",
+							"host": [
+								"{{cartUrl}}"
+							],
+							"path": [
+								"user",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "a new product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\": 5,\r\n    \"date\": \"2020-02-03\",\r\n    \"products\":[{\r\n        \"productId\":5,\r\n        \"quantity\":1\r\n        },\r\n        {\r\n            \"productId\":1,\r\n            \"quantity\":5\r\n            }\r\n            ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{cartUrl}}",
+							"host": [
+								"{{cartUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update product",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\":3,\r\n    \"date\":\"2019-12-10\",\r\n    \"products\":\r\n    [\r\n        {\r\n            \"productId\":1,\r\n            \"quantity\":3}]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{cartUrl}}/7",
+							"host": [
+								"{{cartUrl}}"
+							],
+							"path": [
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "a cart",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{cartUrl}}/6",
+							"host": [
+								"{{cartUrl}}"
+							],
+							"path": [
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{usersUrl}}",
+							"host": [
+								"{{usersUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "users",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{usersUrl}}/6",
+							"host": [
+								"{{usersUrl}}"
+							],
+							"path": [
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "single user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{usersUrl}}/1",
+							"host": [
+								"{{usersUrl}}"
+							],
+							"path": [
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "limit result",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{usersUrl}}?limit=5",
+							"host": [
+								"{{usersUrl}}"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "sort results",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{cartUrl}}?sort=desc",
+							"host": [
+								"{{cartUrl}}"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "desc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add new user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "   {\r\n       \r\n        \"email\":\"John@gmail.com\",\r\n        \"username\":\"johnd\",\r\n        \"password\":\"m38rmF$\",\r\n        \"name\":{\r\n            \"firstname\":\"John\",\r\n            \"lastname\":\"Doe\"\r\n        },\r\n        \"address\":{\r\n            \"city\":\"kilcoole\",\r\n            \"street\":\"7835 new road\",\r\n            \"number\":3,\r\n            \"zipcode\":\"12926-3874\",\r\n            \"geolocation\":{\r\n                \"lat\":\"-37.3159\",\r\n                \"long\":\"81.1496\"\r\n            }\r\n        },\r\n        \"phone\":\"1-570-236-7033\"\r\n        }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{usersUrl}}",
+							"host": [
+								"{{usersUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update a user",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "   {\r\n       \r\n        \"email\":\"John@gmail.com\",\r\n        \"username\":\"johnd\",\r\n        \"password\":\"m38rmF$\",\r\n        \"name\":{\r\n            \"firstname\":\"John\",\r\n            \"lastname\":\"Doe\"\r\n        },\r\n        \"address\":{\r\n            \"city\":\"kilcoole\",\r\n            \"street\":\"7835 new road\",\r\n            \"number\":3,\r\n            \"zipcode\":\"12926-3874\",\r\n            \"geolocation\":{\r\n                \"lat\":\"-37.3159\",\r\n                \"long\":\"81.1496\"\r\n            }\r\n        },\r\n        \"phone\":\"1-570-236-7033\"\r\n        }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{usersUrl}}//7",
+							"host": [
+								"{{usersUrl}}"
+							],
+							"path": [
+								"",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update a user Copy",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "   {\r\n       \r\n        \"email\":\"John@gmail.com\",\r\n        \"username\":\"johnd\",\r\n        \"password\":\"m38rmF$\",\r\n        \"name\":{\r\n            \"firstname\":\"John\",\r\n            \"lastname\":\"Doe\"\r\n        },\r\n        \"address\":{\r\n            \"city\":\"kilcoole\",\r\n            \"street\":\"7835 new road\",\r\n            \"number\":3,\r\n            \"zipcode\":\"12926-3874\",\r\n            \"geolocation\":{\r\n                \"lat\":\"-37.3159\",\r\n                \"long\":\"81.1496\"\r\n            }\r\n        },\r\n        \"phone\":\"1-570-236-7033\"\r\n        }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{usersUrl}}//7",
+							"host": [
+								"{{usersUrl}}"
+							],
+							"path": [
+								"",
+								"7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "User Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"mor_2314\",\r\n    \"password\": \"83r5^_\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{authUrl}}/login",
+							"host": [
+								"{{authUrl}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "productUrl",
+			"value": "https://fakestoreapi.com/products",
+			"type": "string"
+		},
+		{
+			"value": "",
+			"disabled": true
+		},
+		{
+			"key": "cartUrl",
+			"value": "https://fakestoreapi.com/carts",
+			"type": "string"
+		},
+		{
+			"key": "usersUrl",
+			"value": "https://fakestoreapi.com/users",
+			"type": "string"
+		},
+		{
+			"key": "authUrl",
+			"value": "https://fakestoreapi.com/auth",
+			"type": "string"
+		},
+		{
+			"key": 21,
+			"value": ""
+		},
+		{
+			"key": "variable_key",
+			"value": ""
+		}
+	]
+}
