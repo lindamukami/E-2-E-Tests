@@ -3,7 +3,7 @@
 ## About
 - API Automation with postman.
 
-- The api's used in this test were found [here](https://fakestoreapi.com/docs)
+- The api's used in this test can be found [here](https://fakestoreapi.com/docs)
 
 
 ## Setup
