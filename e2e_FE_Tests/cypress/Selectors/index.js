@@ -13,13 +13,11 @@ export const QE_TEST_PAGES = {
     ADD_SINGLE_TEST : {
         ITEM_ONE : '.col-md-3:nth-child(1) button.btn.btn-primary',
         CART : '.shadow-sm button.btn.btn-primary',
-        //LIST_PRODUCT : '.table-responsive  tbody tr td:nth-child(1)',
         ITEM_NAME_ADDED : '.table-responsive  tbody tr:nth-child(1) td:nth-child(2)',
         CART_0 : '.btn-primary .bg-danger',
         SHOP_NOW : '.center button'
     },
     REMOVE_SINGLE_TEST :{
-        //TABLE_DETAILS : '.table-responsive  tbody tr:nth-child(1) td:nth-child(2)',
         REMAIN_CART : '.table-responsive  tbody tr:nth-child(1) td:nth-child(2)',
         REMOVE_ONE :'.table-responsive  tbody tr:nth-child(1) .btn-danger'
     },
@@ -34,12 +32,11 @@ export const QE_TEST_PAGES = {
         LIST_PRODUCT : '.table-responsive  tbody tr td:nth-child(1)',
         FIRST_PRODUCT : '.table-responsive  tbody tr:nth-child(1) td:nth-child(1)',
         LAST_PRODUCT: '.table-responsive  tbody tr:nth-child(4) td:nth-child(1)',
-        CART_3 : '.btn-primary .bg-danger',
+        CART_3 : '.btn-primary .bg-danger'
 
     },
     REMOVE_MULTIPLE_TEST : {
         REMOVE_CART :'.table-responsive  tbody tr:nth-child(4) .btn-danger',
-        EMPTY_CART : '.center h4',
-
+        EMPTY_CART : '.center h4'
     }
 }
